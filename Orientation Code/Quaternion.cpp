@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-#include <fstream>
 #include <string>
 #include <chrono>
 #include <thread>
@@ -10,7 +9,9 @@ using namespace std;
 #include "vector3d.h"
 using namespace irr::core;
 
-#define PI 3.141
+#define PI 3.14159
+
+
 
 int main()
 {
@@ -33,52 +34,18 @@ int main()
 
   vector3d<irr::f32> V;
 
-  fstream gyro;
-
   t = t_ = 0;
-  int i = 0;
-  double a, b;
 
   while(true)
   {
-    // read the data
-    gyro.open("readings.txt", ios::in);
-    std::string tp;
-    for(int j=0; j<=i; j++)
+    for(int i = 0; i < 7; i++)
     {
-      std::getline(gyro, tp);
+      cin >> readings[i];
     }
-    cout << tp << endl;
 
-    // converting the string numbers to doubles
-    int start = 0;
     double readings[7];
-    for(int k = start; k < tp.length(); k++)
-    {
-      int values = 0;
-      // getting the integer part
-      if(tp[k] == 32)
-      {
-          std::string num = tp.substr(start, k);
-          a = stoi(num);
-          for(int m = 0; m < num.length(); m++)
-          {
-            if(num[m] == 46)
-            {
-              std::string decimal = num.substr(m + 1, num.length() - 1);
-              b = stoi(decimal);
-              b /= pow(10, decimal.length());
-            }
-          }
-          double val = a + b;
-          readings[values] = val;
-          values++;
-          start = k + 2;
-      }
-    }
 
     t = readings[0];
-    cout << t << endl;
     gx = readings[1];
     gy = readings[2];
     gz = readings[3];
@@ -86,8 +53,10 @@ int main()
     ty = readings[5];
     tz = readings[6];
 
-    i++;
-    gyro.close();
+    for(int z=0; z<7; z++){
+      cout << readings[z] << " ";
+    }
+    cout << endl;
 
     // rotate position vector accordingly
     double dt = t - t_;
