@@ -3,6 +3,7 @@
 
 BluetoothSerial SerialBT; //Initialise BT object
 bfs::Mpu9250 imu; //Initialise mpu object
+long int refTime = millis(); //Start time
 
 void setup() {
   // put your setup code here, to run once:
@@ -17,7 +18,7 @@ void setup() {
     Serial.print(".");
     delay(1000);
   }
-  Serial.println("Device connected and verified!");
+  Serial.println("\nDevice connected and verified!");
 
   //Start i2c bus
   Wire.begin(); // Default values are SCL: P22, SDA: P21
@@ -37,7 +38,6 @@ void setup() {
   }
   
   pinMode(LED_BUILTIN, OUTPUT); // Initialise Inbuilt LED 
-  long int refTime = millis(); //Start time
 }
 
 void loop() {
