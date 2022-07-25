@@ -6,6 +6,8 @@
 BluetoothSerial SerialBT; //Initialise BT object
 MPU9250_WE sensor = MPU9250_WE(MPU9250_ADDR); //Initialise sensor object 
 long int refTime = millis(); //Start time
+int idx = 0; //index
+int sampleRate = 100;
 
 void setup() {
   // put your setup code here, to run once:
@@ -54,12 +56,17 @@ void setup() {
   delay(200);
   
   pinMode(LED_BUILTIN, OUTPUT); // Initialise Inbuilt LED 
+  
+  Serial.println("Sending calibration data");
+  digitalWrite(LED_BUILTIN, HIGH);
+  for()
 
-  SerialBT.println("Values are as [Time][Gx][Gy][Gz][Ax][Ay][Az][ATotal][Mx][My][Mz]");
+  //SerialBT.println("Values are as [Time][Gx][Gy][Gz][Ax][Ay][Az][Mx][My][Mz]");
 }
 
 void loop() {
   digitalWrite(LED_BUILTIN, HIGH);
+  //idx = idx + 1;
   xyzFloat aValue = sensor.getGValues();
   xyzFloat gyr = sensor.getGyrValues();
   xyzFloat magValue = sensor.getMagValues();
@@ -67,6 +74,9 @@ void loop() {
   float resultantG = sensor.getResultantG(aValue);
   long int currentTime = (millis() - refTime);
 
+  //SerialBT.print(idx);
+  //SerialBT.print(" ");
+  
   SerialBT.print(currentTime);
   SerialBT.print(" ");
   
@@ -89,9 +99,9 @@ void loop() {
   SerialBT.print(magValue.y);
   SerialBT.print(" ");
   SerialBT.print(magValue.z);
-  SerialBT.println(" ");
+  SerialBT.print("\r");
   
   digitalWrite(LED_BUILTIN, LOW);
 
-  delay(500);
+  delay(sampleRate - 3); // Adjustment for lag
 }
