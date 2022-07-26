@@ -33,13 +33,11 @@ while(collectCali)
     if(b > 0)
         dataC = esp32.readline();
         sensorDataCali = cell2mat(arrayfun(@str2num,transpose(split(dataC)),'uni',0));
-        sensorCalibration = [sensorCalibration; sensorDataCali(1:10)];
+        sensorCalibration = [sensorCalibration; sensorDataCali()];
         caliCounter = caliCounter + 1;
-    else
-        b = 0;
     end
 
-    if(caliCounter >= 100)
+    if(caliCounter >= 50)
         break;
     end
 
@@ -47,7 +45,7 @@ while(collectCali)
 end
 
 %Process and save calibration data
-pause(2);
+delay(2);
 save mpuCali.mat sensorCalibration;
 
 %Start the actual data collection

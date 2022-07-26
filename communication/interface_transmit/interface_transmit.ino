@@ -8,6 +8,7 @@ MPU9250_WE sensor = MPU9250_WE(MPU9250_ADDR); //Initialise sensor object
 long int refTime = millis(); //Start time
 int idx = 0; //index
 int sampleRate = 100;
+int calibration = 100;
 
 void setup() {
   // put your setup code here, to run once:
@@ -43,7 +44,7 @@ void setup() {
   Serial.println("Position you MPU9250 flat and don't move it - calibrating...");
   delay(1000);
   sensor.autoOffsets();
-  Serial.println("Done!");
+  Serial.println("Internal calibration done!");
 
   sensor.setSampleRateDivider(5); // Sample rate = internal rate/(divider + 1)
   sensor.setAccRange(MPU9250_ACC_RANGE_4G); //Can be changed to 2G, 4G, 8G, 16G
@@ -57,9 +58,49 @@ void setup() {
   
   pinMode(LED_BUILTIN, OUTPUT); // Initialise Inbuilt LED 
   
-  Serial.println("Sending calibration data");
+  Serial.println("Sending calibration data, keep glove flat and steady");
   digitalWrite(LED_BUILTIN, HIGH);
-  for()
+  delay(1000);
+  for(int i = 0; i<calibration; i++) {
+    xyzFloat aValue = sensor.getGValues();
+    xyzFloat gyr = sensor.getGyrValues();
+    xyzFloat magValue = sensor.getMagValues();
+    long int currentTime = (millis() - refTime);
+    
+    SerialBT.print(currentTime);
+    SerialBT.print(" ");
+  
+    SerialBT.print(gyr.x);
+    SerialBT.print(" ");
+    SerialBT.print(gyr.y);
+    SerialBT.print(" ");
+    SerialBT.print(gyr.z);
+    SerialBT.print(" ");
+    
+    SerialBT.print(aValue.x);
+    SerialBT.print(" ");
+    SerialBT.print(aValue.y);
+    SerialBT.print(" ");
+    SerialBT.print(aValue.z);
+    SerialBT.print(" ");
+    
+    SerialBT.print(magValue.x);
+    SerialBT.print(" ");
+    SerialBT.print(magValue.y);
+    SerialBT.print(" ");
+    SerialBT.print(magValue.z);
+    SerialBT.print("\r");
+    
+    delay(sampleRate - 3);
+ }
+ 
+ Serial.println("Waiting for confirmation");
+ while(!SerialBT.available()){
+  Serial.print(".");
+  delay(1000);
+  }
+  Serial.println("\nLet us begin");
+  digitalWrite(LED_BUILTIN, LOW);
 
   //SerialBT.println("Values are as [Time][Gx][Gy][Gz][Ax][Ay][Az][Mx][My][Mz]");
 }
