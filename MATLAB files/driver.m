@@ -20,6 +20,7 @@ pos = [0 0 0];
 
 % Define BlueTooth object. The exact name is required
 esp32 = bluetooth("Shobhit_ESP32", 1);
+flush(esp32);
 esp32.configureTerminator("CR");
 collectVal = 1;
 collectCali = 1;
@@ -30,6 +31,7 @@ watchdog = 0;
 esp32.writeline("hello");
 while(collectCali)
     b = esp32.NumBytesAvailable;
+    pause(0.01);
     if(b > 0)
         dataC = esp32.readline();
         sensorDataCali = cell2mat(arrayfun(@str2num,transpose(split(dataC)),'uni',0));
@@ -47,6 +49,7 @@ while(collectCali)
 end
 
 %Process and save calibration data
+flush(esp32);
 pause(2);
 save mpuCali.mat sensorCalibration;
 
@@ -61,7 +64,8 @@ while (collectVal)
         sensorDataNew = cell2mat(arrayfun(@str2num,transpose(split(data)),'uni',0));
         %sensorDataNew = array2table(sensorDataNew(1:10));
         % Accel, Gyro, Magneto
-        q = fuse(sensorDataNew(5:7)*9.81, sensorDataNew(2:4)*(pi/180), sensorDataNew(8:10));
+        q = fuse(sensorDataNew(5:7)*(-9.81), sensorDataNew(2:4)*(pi/180), sensorDataNew(8:10));
+        
         set(pp, Orientation = q, Position = pos);
         drawnow
     else
