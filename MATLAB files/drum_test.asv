@@ -1,0 +1,11 @@
+clear;
+
+[y1,fs1]=audioread("Closed-HiHat.wav");
+[y2, fs2] = audioread("Hand-clap.wav");
+[y3,fs3] = audioread
+for i = 1:10
+    sound(y1(1105:5000, :), fs1);
+    pause(0.25);
+    sound(y2(1105:5000, :), fs2);
+    pause(1);
+end
