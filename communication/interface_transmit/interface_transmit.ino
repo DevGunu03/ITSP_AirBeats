@@ -58,49 +58,49 @@ void setup() {
   
   pinMode(LED_BUILTIN, OUTPUT); // Initialise Inbuilt LED 
   
-  Serial.println("Sending calibration data, keep glove flat and steady");
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  for(int i = 0; i<calibration; i++) {
-    xyzFloat aValue = sensor.getGValues();
-    xyzFloat gyr = sensor.getGyrValues();
-    xyzFloat magValue = sensor.getMagValues();
-    long int currentTime = (millis() - refTime);
-    
-    SerialBT.print(currentTime);
-    SerialBT.print(" ");
-  
-    SerialBT.print(gyr.x);
-    SerialBT.print(" ");
-    SerialBT.print(gyr.y);
-    SerialBT.print(" ");
-    SerialBT.print(gyr.z);
-    SerialBT.print(" ");
-    
-    SerialBT.print(aValue.x);
-    SerialBT.print(" ");
-    SerialBT.print(aValue.y);
-    SerialBT.print(" ");
-    SerialBT.print(aValue.z);
-    SerialBT.print(" ");
-    
-    SerialBT.print(magValue.x);
-    SerialBT.print(" ");
-    SerialBT.print(magValue.y);
-    SerialBT.print(" ");
-    SerialBT.print(magValue.z);
-    SerialBT.print("\r");
-    
-    delay(sampleRate - 3);
- }
- 
- Serial.println("Waiting for confirmation");
- while(!SerialBT.available()){
-  Serial.print(".");
-  delay(1000);
-  }
+//  Serial.println("Sending calibration data, keep glove flat and steady");
+//  digitalWrite(LED_BUILTIN, HIGH);
+//  delay(1000);
+//  for(int i = 0; i<calibration; i++) {
+//    xyzFloat aValue = sensor.getGValues();
+//    xyzFloat gyr = sensor.getGyrValues();
+//    xyzFloat magValue = sensor.getMagValues();
+//    long int currentTime = (millis() - refTime);
+//    
+//    SerialBT.print(currentTime);
+//    SerialBT.print(" ");
+//  
+//    SerialBT.print(gyr.x);
+//    SerialBT.print(" ");
+//    SerialBT.print(gyr.y);
+//    SerialBT.print(" ");
+//    SerialBT.print(gyr.z);
+//    SerialBT.print(" ");
+//    
+//    SerialBT.print(aValue.x);
+//    SerialBT.print(" ");
+//    SerialBT.print(aValue.y);
+//    SerialBT.print(" ");
+//    SerialBT.print(aValue.z);
+//    SerialBT.print(" ");
+//    
+//    SerialBT.print(magValue.x);
+//    SerialBT.print(" ");
+//    SerialBT.print(magValue.y);
+//    SerialBT.print(" ");
+//    SerialBT.print(magValue.z);
+//    SerialBT.print("\r");
+//    
+//    delay(sampleRate - 3);
+// }
+// 
+// Serial.println("Waiting for confirmation");
+// while(!SerialBT.available()){
+//  Serial.print(".");
+//  delay(1000);
+//  }
   Serial.println("\nLet us begin");
-  digitalWrite(LED_BUILTIN, LOW);
+  // digitalWrite(LED_BUILTIN, LOW);
 
   //SerialBT.println("Values are as [Time][Gx][Gy][Gz][Ax][Ay][Az][Mx][My][Mz]");
 }
