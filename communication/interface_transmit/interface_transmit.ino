@@ -100,7 +100,7 @@ void setup() {
 //  delay(1000);
 //  }
   Serial.println("\nLet us begin");
-  // digitalWrite(LED_BUILTIN, LOW);
+  // ';digitalWrite(LED_BUILTIN, LOW);
 
   //SerialBT.println("Values are as [Time][Gx][Gy][Gz][Ax][Ay][Az][Mx][My][Mz]");
 }
