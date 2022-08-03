@@ -7,7 +7,7 @@ BluetoothSerial SerialBT; //Initialise BT object
 MPU9250_WE sensor = MPU9250_WE(MPU9250_ADDR); //Initialise sensor object 
 long int refTime = millis(); //Start time
 int idx = 0; //index
-int sampleRate = 100;
+int sampleRate = 50;
 int calibration = 100;
 
 void setup() {
@@ -57,52 +57,7 @@ void setup() {
   delay(200);
   
   pinMode(LED_BUILTIN, OUTPUT); // Initialise Inbuilt LED 
-  
-//  Serial.println("Sending calibration data, keep glove flat and steady");
-//  digitalWrite(LED_BUILTIN, HIGH);
-//  delay(1000);
-//  for(int i = 0; i<calibration; i++) {
-//    xyzFloat aValue = sensor.getGValues();
-//    xyzFloat gyr = sensor.getGyrValues();
-//    xyzFloat magValue = sensor.getMagValues();
-//    long int currentTime = (millis() - refTime);
-//    
-//    SerialBT.print(currentTime);
-//    SerialBT.print(" ");
-//  
-//    SerialBT.print(gyr.x);
-//    SerialBT.print(" ");
-//    SerialBT.print(gyr.y);
-//    SerialBT.print(" ");
-//    SerialBT.print(gyr.z);
-//    SerialBT.print(" ");
-//    
-//    SerialBT.print(aValue.x);
-//    SerialBT.print(" ");
-//    SerialBT.print(aValue.y);
-//    SerialBT.print(" ");
-//    SerialBT.print(aValue.z);
-//    SerialBT.print(" ");
-//    
-//    SerialBT.print(magValue.x);
-//    SerialBT.print(" ");
-//    SerialBT.print(magValue.y);
-//    SerialBT.print(" ");
-//    SerialBT.print(magValue.z);
-//    SerialBT.print("\r");
-//    
-//    delay(sampleRate - 3);
-// }
-// 
-// Serial.println("Waiting for confirmation");
-// while(!SerialBT.available()){
-//  Serial.print(".");
-//  delay(1000);
-//  }
   Serial.println("\nLet us begin");
-  // ';digitalWrite(LED_BUILTIN, LOW);
-
-  //SerialBT.println("Values are as [Time][Gx][Gy][Gz][Ax][Ay][Az][Mx][My][Mz]");
 }
 
 void loop() {
@@ -143,6 +98,6 @@ void loop() {
   SerialBT.print("\r");
   
   digitalWrite(LED_BUILTIN, LOW);
-
+  
   delay(sampleRate - 3); // Adjustment for lag
 }
